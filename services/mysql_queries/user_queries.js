@@ -29,7 +29,7 @@ userQueries.getUserByEmail = async (email) => {
       "SELECT * FROM users WHERE email = ?",
       email,
       "select",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -49,6 +49,7 @@ userQueries.addUser = async (userData) => {
       email: userData.email,
       password: md5(userData.password),
       telefono: userData.telefono,
+      rol: userData.rol,
     };
     return await db.query("INSERT INTO users SET ?", userObj, "insert", conn);
   } catch (e) {
@@ -63,10 +64,10 @@ userQueries.getUserById = async (id) => {
   try {
     conn = await db.createConnection();
     return await db.query(
-      "SELECT * FROM usuarios WHERE id = ?",
+      "SELECT * FROM users WHERE id = ?",
       id,
       "select",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -80,10 +81,10 @@ userQueries.deleteUser = async (id) => {
   try {
     conn = await db.createConnection();
     return await db.query(
-      "UPDATE usuarios SET activo = 0 WHERE id = ?",
+      "UPDATE users SET activo = 0 WHERE id = ?",
       id,
       "update",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -103,10 +104,10 @@ userQueries.updateUser = async (id, userData) => {
     // y usamos la libreria momentjs para actualizar la fecha.
     let userObj = {
       nombre: userData.nombre,
-      apellidos: userData.apellidos,
+      apellido: userData.apellido,
       email: userData.email,
       password: userData.password ? md5(userData.password) : undefined,
-      direccion: userData.direccion,
+      rol: userData.rol,
       telefono: userData.telefono,
       activo: userData.activo,
       //update_date: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -115,10 +116,10 @@ userQueries.updateUser = async (id, userData) => {
     userObj = await utils.removeUndefinedKeys(userObj);
 
     return await db.query(
-      "UPDATE usuarios SET ? WHERE id = ?",
+      "UPDATE users SET ? WHERE id = ?",
       [userObj, id],
       "update",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -135,7 +136,7 @@ userQueries.getCountUser = async () => {
       "SELECT COUNT(*) as usuarios FROM usuarios",
       [],
       "select",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -163,7 +164,7 @@ userQueries.addContact = async (contactData) => {
       "INSERT INTO contacto SET ?",
       userObj,
       "insert",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -180,7 +181,7 @@ userQueries.getCountContact = async () => {
       "SELECT COUNT(*) as contactos FROM contacto",
       [],
       "select",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -209,7 +210,7 @@ userQueries.deleteContactById = async (id) => {
       "DELETE FROM contacto WHERE id =?",
       [id],
       "delete",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);
@@ -226,7 +227,7 @@ userQueries.getVerify = async (id) => {
       "UPDATE usuarios SET activo = 1 WHERE id = ?",
       id,
       "update",
-      conn
+      conn,
     );
   } catch (e) {
     throw new Error(e);

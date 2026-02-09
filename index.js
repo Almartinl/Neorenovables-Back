@@ -23,6 +23,7 @@ const db = require("./services/mysql.js");
 const userRouter = require("./routes/user_router.js");
 const productRouter = require("./routes/product_router.js");
 const clienteRouter = require("./routes/cliente_router.js");
+const estudioRouter = require("./routes/estudio_router.js");
 const fileUpload = require("express-fileupload");
 const { fileURLToPath } = require("url");
 const { dirname, join } = require("path");
@@ -132,7 +133,8 @@ function onListening() {
 
 // middlware express
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.text());
 app.use(logger("dev"));
 app.use(cookieParser());
@@ -146,7 +148,7 @@ app.use(
     abortOnLimit: true, // Interrumpe la carga del archivo si supera el límite especificado.
     responseOnLimit: "Imagen demasiado grande", // Enviamos un mensaje de respuesta cuando se interrumpe la carga.
     uploadTimeout: 0, // Indicamos el tiempo de respuesta si se interrumpe la carga de la imagen.
-  })
+  }),
 );
 
 const routes = express.Router();
@@ -162,6 +164,8 @@ routes.use("/presupuestos", presupuestosRouter);
 routes.use("/colaborador", colaboradorRouter);
 
 routes.use("/agenda", agendaRouter);
+
+routes.use("/estudios", estudioRouter);
 
 // routes.use("/config", configRouter);
 

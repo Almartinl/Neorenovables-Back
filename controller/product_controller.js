@@ -103,6 +103,7 @@ controller.addProducto = async (req, res) => {
       proveedor,
       precio_compra,
       precio_venta,
+      dto_maximo,
       marca,
       descripcion,
       valores,
@@ -123,6 +124,7 @@ controller.addProducto = async (req, res) => {
       proveedor,
       precio_compra,
       precio_venta,
+      dto_maximo,
       marca,
       descripcion,
       ficha,
@@ -202,8 +204,6 @@ controller.deleteProducto = async (req, res) => {
     res.status(500).send(e.message);
   }
 };
-
-
 
 // // ===== Categorías =====
 // controller.getCategorias = async (req, res) => {
@@ -694,8 +694,6 @@ controller.deleteProducto = async (req, res) => {
 //     return res.status(400).send(e.message);
 //   }
 // };
-
-
 
 module.exports = controller;
 

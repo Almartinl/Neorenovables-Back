@@ -13,6 +13,7 @@ const clienteQueries = require("./mysql_queries/cliente_queries.js");
 const presupuestosQueries = require("./mysql_queries/presupuestos_queries.js");
 const colaboradorQueries = require("./mysql_queries/colaborador_queries.js");
 const agendaQueries = require("./mysql_queries/agenda_queries.js");
+const estudioQueries = require("./mysql_queries/estudios_queries.js");
 
 const dao = {};
 
@@ -128,6 +129,30 @@ dao.updatePresupuestoItems = async (items) => {
     await presupuestosQueries.updatePresupuestoItem(item);
   }
 };
+
+// ==================== ESTUDIOS ====================
+
+dao.getAllEstudios = async (usuarioId) =>
+  await estudioQueries.getAllEstudios(usuarioId);
+
+dao.getAllEstudiosAdmin = async () =>
+  await estudioQueries.getAllEstudiosAdmin();
+
+dao.getEstudioById = async (id) => await estudioQueries.getEstudioById(id);
+
+dao.getEstudiosByCliente = async (clienteId) =>
+  await estudioQueries.getEstudiosByCliente(clienteId);
+
+dao.addEstudio = async (estudioData) =>
+  await estudioQueries.addEstudio(estudioData);
+
+dao.updateEstudio = async (id, estudioData) =>
+  await estudioQueries.updateEstudio(id, estudioData);
+
+dao.updateEstadoEstudio = async (id, estado) =>
+  await estudioQueries.updateEstadoEstudio(id, estado);
+
+dao.deleteEstudio = async (id) => await estudioQueries.deleteEstudio(id);
 
 // Obtener Citas
 dao.getAgenda = async () => await agendaQueries.getAgenda();
